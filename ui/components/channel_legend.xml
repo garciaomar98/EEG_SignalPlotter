@@ -1,0 +1,21 @@
+<component>
+    <api>
+        <prop name="channel_1_text" type="string" default="ADC:+0" help="Visible ADC value for channel 1" />
+    </api>
+
+    <view extends="lv_obj" width="204" height="34">
+        <remove_style_all />
+        <style name="card" />
+        <style name="legend_card" />
+
+        <lv_label
+            text="$channel_1_text"
+            width="188"
+            long_mode="clip"
+            x="8"
+            y="5"
+        >
+            <style name="channel_1_text" />
+        </lv_label>
+    </view>
+</component>

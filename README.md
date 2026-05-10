@@ -150,12 +150,12 @@ The firmware is organized as layered C++ code:
 - `src/app/` owns the high-level state machine, app events, and app-visible state.
 - `src/services/` wraps acquisition, BLE streaming, and signal processing.
 - `src/drivers/` contains the ADS1256 Zephyr SPI/GPIO wrapper.
-- `src/ui/` is the only layer that calls LVGL APIs. UI event helpers publish app events instead of controlling hardware directly.
+- `ui/` owns the LVGL project. Firmware-facing UI code lives in `ui/src/` with public headers in `ui/include/ui/`; UI event helpers publish app events instead of controlling hardware directly.
 
 Board-specific hardware configuration remains in Devicetree under `boards/UABC-FIAD/eeg_signal_reader/`.
 The ADS1256 driver reads SPI, CS, DRDY, RESET, SYNC/PDWN, channel, gain, and data-rate configuration from the `ads1256` DTS node.
 
-The current Zephyr module provides LVGL `9.5.0`. XML UI source placeholders are under `src/ui/xml/`; generated code should go under `src/ui/generated/` and be compiled into the firmware, not parsed at runtime.
+The current Zephyr module provides LVGL `9.5.0`. LVGL Online Editor assets and XML sources live under the root `ui/` folder (`screens/`, `components/`, `widgets/`, `images/`, `fonts/`, and `globals.xml`). When the Editor emits `file_list_gen.cmake` and `component_lib_list_gen.cmake`, the Zephyr build includes `ui/CMakeLists.txt` and links the generated `lib-ui` library into the firmware; XML is not parsed at runtime.
 
 ## Future ESP32-S3 Board
 

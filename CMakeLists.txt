@@ -14,11 +14,21 @@ target_sources(app PRIVATE
     src/services/acquisition_service.cpp
     src/services/ble_service.cpp
     src/services/signal_processing_service.cpp
-    src/ui/ui.cpp
-    src/ui/ui_events.cpp
+    ui/src/ui.cpp
+    ui/src/ui_events.cpp
 )
 
 target_include_directories(app PRIVATE
     include
     src
+    ui/include
 )
+
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/ui/file_list_gen.cmake AND
+   EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/ui/component_lib_list_gen.cmake)
+    add_subdirectory(ui)
+    if(TARGET zephyr_interface)
+        target_link_libraries(lib-ui PUBLIC zephyr_interface)
+    endif()
+    target_link_libraries(app PRIVATE lib-ui)
+endif()

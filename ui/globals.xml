@@ -4,11 +4,66 @@
     </api>
 
     <consts>
-        <!-- Add <px>, <int>, <color> etc here -->
+        <int name="reference_display_width" value="240" />
+        <int name="reference_display_height" value="240" />
+        <int name="chart_point_count" value="72" />
+        <color name="screen_top_color" value="0x081018" />
+        <color name="screen_bottom_color" value="0x12314c" />
+        <color name="card_color" value="0x122033" />
+        <color name="card_border_color" value="0x29425d" />
+        <color name="primary_text_color" value="0xf2f7ff" />
+        <color name="secondary_text_color" value="0x9db4c8" />
+        <color name="ble_connected_color" value="0x4ce08a" />
+        <color name="ble_pairing_color" value="0xffd166" />
+        <color name="ble_disconnected_color" value="0xff5a5f" />
+        <color name="pairing_track_color" value="0x26384d" />
+        <color name="adc_live_color" value="0x1f8a70" />
+        <color name="adc_offline_color" value="0xbf7b28" />
+        <color name="channel_1_color" value="0xff6b6b" />
+        <string name="default_quality_text" value="Signal quality: --" />
+        <string name="pairing_hint_text" value="Visible for 30s" />
     </consts>
 
     <styles>
-        <!-- Add <style> tags here -->
+        <style
+            name="screen_background"
+            bg_color="#screen_top_color"
+            bg_grad_color="#screen_bottom_color"
+            bg_grad_dir="ver"
+            bg_opa="100%"
+            pad_all="0"
+        />
+        <style
+            name="card"
+            radius="18"
+            bg_color="#card_color"
+            bg_opa="100%"
+            border_width="1"
+            border_color="#card_border_color"
+            pad_all="0"
+        />
+        <style
+            name="status_card"
+            radius="15"
+            bg_color="#card_color"
+            bg_opa="100%"
+            border_width="1"
+            border_color="#adc_offline_color"
+            pad_all="0"
+        />
+        <style name="legend_card" radius="14" />
+        <style name="quality_chip" radius="9" border_color="#adc_offline_color" />
+        <style name="primary_text" text_color="#primary_text_color" />
+        <style name="secondary_text" text_color="#secondary_text_color" />
+        <style name="channel_1_text" text_color="#channel_1_color" />
+        <style
+            name="overlay"
+            bg_color="#screen_top_color"
+            bg_grad_color="#screen_bottom_color"
+            bg_grad_dir="ver"
+            bg_opa="100%"
+            pad_all="0"
+        />
     </styles>
 
     <subjects>

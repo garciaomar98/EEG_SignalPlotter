@@ -1,0 +1,28 @@
+<component>
+    <view extends="lv_obj" width="204" height="112">
+        <remove_style_all />
+        <style name="card" />
+
+        <lv_chart
+            width="180"
+            height="88"
+            align="center"
+            type="line"
+            point_count="#chart_point_count"
+            hor_div_line_count="3"
+            ver_div_line_count="3"
+            update_mode="shift"
+            style_bg_opa="0%"
+            style_border_width="0"
+            style_line_color="#card_border_color"
+            style_line_width="2"
+            style_pad_left="0"
+            style_pad_right="0"
+            style_pad_top="0"
+            style_pad_bottom="0"
+            style_size-indicator="0"
+        >
+            <lv_chart-series color="#channel_1_color" axis="primary_y" />
+        </lv_chart>
+    </view>
+</component>

@@ -1,0 +1,18 @@
+<component>
+    <api>
+        <prop name="battery_text" type="string" default="--" help="Battery icon and percent text" />
+        <prop name="ble_text" type="string" default="BT OFF" help="Bluetooth status text" />
+        <prop name="ble_color" type="color" default="#ble_disconnected_color" help="Bluetooth status color" />
+    </api>
+
+    <view extends="lv_obj" width="140" height="30">
+        <remove_style_all />
+        <style name="status_card" />
+
+        <lv_label text="$battery_text" align="left_mid" x="12">
+            <style name="primary_text" />
+        </lv_label>
+
+        <lv_label text="$ble_text" align="right_mid" x="-12" style_text_color="$ble_color" />
+    </view>
+</component>

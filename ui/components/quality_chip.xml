@@ -1,0 +1,21 @@
+<component>
+    <api>
+        <prop name="quality_text" type="string" default="#default_quality_text" help="Signal quality status text" />
+    </api>
+
+    <view extends="lv_obj" width="184" height="18">
+        <remove_style_all />
+        <style name="card" />
+        <style name="quality_chip" />
+
+        <lv_label
+            text="$quality_text"
+            width="168"
+            long_mode="clip"
+            align="center"
+            style_text_align="center"
+        >
+            <style name="secondary_text" />
+        </lv_label>
+    </view>
+</component>
