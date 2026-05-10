@@ -1,0 +1,42 @@
+#include <zephyr/dt-bindings/pinctrl/esp-pinctrl-common.h>
+#include <zephyr/dt-bindings/pinctrl/esp32-pinctrl.h>
+#include <zephyr/dt-bindings/pinctrl/esp32-gpio-sigmap.h>
+
+&pinctrl {
+	uart0_default: uart0_default {
+		group1 {
+			pinmux = <UART0_TX_GPIO1>;
+			output-high;
+		};
+
+		group2 {
+			pinmux = <UART0_RX_GPIO3>;
+			bias-pull-up;
+		};
+	};
+
+	ads1256_spi_default: ads1256_spi_default {
+		group1 {
+			pinmux = <SPIM2_MISO_GPIO39>,
+				 <SPIM2_SCLK_GPIO25>,
+				 <SPIM2_CSEL_GPIO27>;
+		};
+
+		group2 {
+			pinmux = <SPIM2_MOSI_GPIO26>;
+			output-low;
+		};
+	};
+
+	display_spi_default: display_spi_default {
+		group1 {
+			pinmux = <SPIM3_SCLK_GPIO18>,
+				 <SPIM3_CSEL_GPIO5>;
+		};
+
+		group2 {
+			pinmux = <SPIM3_MOSI_GPIO19>;
+			output-low;
+		};
+	};
+};

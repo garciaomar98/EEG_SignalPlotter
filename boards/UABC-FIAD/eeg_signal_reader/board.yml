@@ -1,0 +1,6 @@
+board:
+  name: eeg_signal_reader
+  full_name: EEG Signal Reader
+  vendor: UABC-FIAD
+  socs:
+  - name: esp32

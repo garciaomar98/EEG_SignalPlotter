@@ -1,0 +1,198 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/dts-v1/;
+
+#include <espressif/esp32/esp32_wrover_e_n4r8.dtsi>
+#include "eeg_signal_reader-pinctrl.dtsi"
+#include <espressif/partitions_0x1000_amp.dtsi>
+#include <zephyr/dt-bindings/adc/adc.h>
+#include <zephyr/dt-bindings/display/panel.h>
+#include <zephyr/dt-bindings/gpio/gpio.h>
+#include <zephyr/dt-bindings/mipi_dbi/mipi_dbi.h>
+
+/ {
+	model = "UABC-FIAD EEG Signal Reader ESP32 PROCPU";
+	compatible = "uabc-fiad,eeg-signal-reader";
+
+	aliases {
+		uart-0 = &uart0;
+		watchdog0 = &wdt0;
+		sw0 = &pair_button;
+	};
+
+	chosen {
+		zephyr,sram = &sram1;
+		zephyr,console = &uart0;
+		zephyr,shell-uart = &uart0;
+		zephyr,flash = &flash0;
+		zephyr,code-partition = &slot0_partition;
+		zephyr,bt-hci = &esp32_bt_hci;
+		zephyr,display = &st7789v_tft;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		display_bl: display_bl {
+			gpios = <&gpio0 4 GPIO_ACTIVE_HIGH>;
+			label = "TFT Backlight";
+		};
+	};
+
+	buttons {
+		compatible = "gpio-keys";
+
+		pair_button: pair_button {
+			gpios = <&gpio1 3 GPIO_ACTIVE_LOW>;
+			label = "BLE Pair";
+		};
+	};
+
+	battery_input: battery_input {
+		compatible = "voltage-divider";
+		io-channels = <&adc0 6>;
+		output-ohms = <100000>;
+		full-ohms = <(100000 + 100000)>;
+		power-gpios = <&gpio0 14 GPIO_ACTIVE_HIGH>;
+		power-on-sample-delay-us = <15000>;
+	};
+
+	mipi_dbi_tft {
+		compatible = "zephyr,mipi-dbi-spi";
+		spi-dev = <&spi3>;
+		dc-gpios = <&gpio0 16 GPIO_ACTIVE_HIGH>;
+		reset-gpios = <&gpio0 23 GPIO_ACTIVE_LOW>;
+		write-only;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		status = "okay";
+
+		st7789v_tft: st7789v@0 {
+			compatible = "sitronix,st7789v";
+			reg = <0>;
+			mipi-max-frequency = <20000000>;
+
+			width = <240>;
+			height = <135>;
+			x-offset = <40>;
+			y-offset = <53>;
+
+			vcom = <0x19>;
+			gctrl = <0x35>;
+			vrhs = <0x12>;
+			vdvs = <0x20>;
+			mdac = <0x77>;
+			gamma = <0x00>;
+			pixel-format = <PANEL_PIXEL_FORMAT_RGB_565>;
+			lcm = <0x2c>;
+			porch-param = [0c 0c 00 33 33];
+			cmd2en-param = [5a 69 02 00];
+			pwctrl1-param = [a4 a1];
+			pvgam-param = [d0 04 0d 11 13 2b 3f 54 4c 18 0d 0b 1f 23];
+			nvgam-param = [d0 04 0c 11 13 2c 3f 44 51 2f 1f 1f 20 23];
+			ram-param = [00 f0];
+			rgb-param = [40 02 14];
+			mipi-mode = "MIPI_DBI_MODE_SPI_4WIRE";
+			status = "okay";
+		};
+	};
+};
+
+&uart0 {
+	status = "okay";
+	current-speed = <115200>;
+	pinctrl-0 = <&uart0_default>;
+	pinctrl-names = "default";
+};
+
+&uart1 {
+	current-speed = <115200>;
+};
+
+&uart2 {
+	current-speed = <115200>;
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+&gpio1 {
+	status = "okay";
+};
+
+&adc0 {
+	status = "okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	channel@6 {
+		reg = <6>;
+		zephyr,gain = "ADC_GAIN_1_4";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,vref-mv = <1100>;
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <12>;
+		zephyr,oversampling = <4>;
+	};
+};
+
+&spi2 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	pinctrl-0 = <&ads1256_spi_default>;
+	pinctrl-names = "default";
+	cs-gpios = <&gpio0 27 GPIO_ACTIVE_LOW>;
+	status = "okay";
+
+	ads1256: adc@0 {
+		compatible = "headband,ads1256";
+		reg = <0>;
+		spi-max-frequency = <1920000>;
+		drdy-gpios = <&gpio1 4 GPIO_ACTIVE_LOW>;
+		reset-gpios = <&gpio1 1 GPIO_ACTIVE_LOW>;
+		syncpwdn-gpios = <&gpio1 0 GPIO_ACTIVE_LOW>;
+		single-ended-channel = <4>;
+		data-rate = <10>;
+		pga = <1>;
+		status = "okay";
+	};
+};
+
+&spi3 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	pinctrl-0 = <&display_spi_default>;
+	pinctrl-names = "default";
+	cs-gpios = <&gpio0 5 GPIO_ACTIVE_LOW>;
+	status = "okay";
+};
+
+&timer0 {
+	status = "disabled";
+};
+
+&timer1 {
+	status = "disabled";
+};
+
+&timer2 {
+	status = "disabled";
+};
+
+&timer3 {
+	status = "disabled";
+};
+
+&trng0 {
+	status = "okay";
+};
+
+&esp32_bt_hci {
+	status = "okay";
+};
+
+&wifi {
+	status = "okay";
+};

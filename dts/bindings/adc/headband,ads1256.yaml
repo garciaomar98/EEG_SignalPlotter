@@ -1,0 +1,39 @@
+# SPDX-License-Identifier: Apache-2.0
+
+description: Headband ADS1256 SPI ADC helper binding
+
+compatible: "headband,ads1256"
+
+include: spi-device.yaml
+
+properties:
+  drdy-gpios:
+    type: phandle-array
+    required: true
+    description: Data-ready pin from the ADS1256.
+
+  reset-gpios:
+    type: phandle-array
+    description: Optional active-low reset pin.
+
+  syncpwdn-gpios:
+    type: phandle-array
+    description: Optional active-low SYNC/PDWN pin.
+
+  single-ended-channel:
+    type: int
+    required: true
+    enum: [0, 1, 2, 3, 4, 5, 6, 7]
+    description: Single-ended ADS1256 channel to sample against AINCOM.
+
+  data-rate:
+    type: int
+    default: 10
+    enum: [2, 5, 10, 15, 25, 30, 50, 60, 100, 500, 1000, 2000, 3750, 7500, 15000, 30000]
+    description: Requested ADS1256 output data rate in samples per second.
+
+  pga:
+    type: int
+    default: 1
+    enum: [1, 2, 4, 8, 16, 32, 64]
+    description: ADS1256 programmable gain.

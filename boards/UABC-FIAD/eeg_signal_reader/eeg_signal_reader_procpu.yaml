@@ -1,0 +1,12 @@
+identifier: eeg_signal_reader/esp32/procpu
+name: EEG Signal Reader ESP32 PROCPU
+type: mcu
+arch: xtensa
+toolchain:
+  - zephyr
+supported:
+  - gpio
+  - spi
+  - uart
+  - display
+vendor: UABC-FIAD

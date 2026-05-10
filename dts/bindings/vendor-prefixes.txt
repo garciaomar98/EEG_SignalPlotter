@@ -1,0 +1,3 @@
+headband	Headband local application bindings
+UABC-FIAD	UABC-FIAD (Custom Board Definition)
+uabc-fiad	UABC-FIAD (Custom Board Definition)
